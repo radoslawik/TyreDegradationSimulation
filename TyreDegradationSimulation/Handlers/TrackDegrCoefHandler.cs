@@ -25,8 +25,9 @@ namespace TyreDegradationSimulation.Handlers
                 coef.TrackLocation = coefFields[1];
 
                 char[] valDelimiter = { ',' };
-                coefValues = coefs[i].Split(valDelimiter);
-                coef.Values = coefValues.ToList();
+                coefValues = coefFields[2].Split(valDelimiter);
+                int[] coefIntVals = Array.ConvertAll(coefValues, int.Parse);
+                coef.Values = coefIntVals.ToList();
 
                 tdCoefs.Add(coef);
             }

@@ -14,4 +14,12 @@ namespace TyreDegradationSimulation.Models
         public string Placement { get; set; }
         public int DegradationCoefficient { get; set; }
     }
+
+    public class AvailableTyresList
+    {
+        public List<Tyre> TyresFL { get; set; }
+        public List<Tyre> TyresFR { get; set; }
+        public List<Tyre> TyresRL { get; set; }
+        public List<Tyre> TyresRR { get; set; }
+    }
 }

@@ -10,6 +10,6 @@ namespace TyreDegradationSimulation.Models
     {
         public string TrackName { get; set; }
         public string TrackLocation { get; set; }
-        public List<string> Values { get; set; }
+        public List<int> Values { get; set; }
     }
 }

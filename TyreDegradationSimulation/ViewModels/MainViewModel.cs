@@ -13,23 +13,65 @@ namespace TyreDegradationSimulation.ViewModels
         public XmlHandler XmlHandler;
         public TrackDegrCoefHandler CoefHandler;
         public TemperatureHandler TempHandler;
-        public List<Tyre> AvailableTyres { get; set; }
-        public List<TrackDegrCoef> CoefPoints { get; set; }
+     
         public MainViewModel() : base()
         {
-            XmlHandler = new XmlHandler();
-            AvailableTyres = XmlHandler.DeserializeXml("Resources/TyresXML.xml");
-            Console.WriteLine(AvailableTyres[0].Name);
+            GetAndSortTyres();
+            GetDegradationData();
 
-            CoefHandler = new TrackDegrCoefHandler();
-            CoefPoints = CoefHandler.DeserializeTxt("Resources/TrackDegradationCoefficients.txt");
-            Console.WriteLine(CoefPoints[0].TrackLocation);
-            Console.WriteLine(CoefPoints[0].TrackName);
+
+            Console.WriteLine(TrackCoefPoints[0].TrackLocation);
+            Console.WriteLine(TrackCoefPoints[0].TrackName);
 
             TempHandler = new TemperatureHandler();
         }
 
+        public void GetAndSortTyres()
+        {
+            XmlHandler = new XmlHandler();
+            List<Tyre> allTyres = XmlHandler.DeserializeXml("Resources/TyresXML.xml");
+            Console.WriteLine(allTyres[0].Name);
 
+            List<Tyre> fl = new List<Tyre>();
+            List<Tyre> fr = new List<Tyre>();
+            List<Tyre> rl = new List<Tyre>();
+            List<Tyre> rr = new List<Tyre>();
+            AvailableTyresList sortedTyres = new AvailableTyresList();
+
+            foreach (Tyre tyre in allTyres)
+            {
+                switch (tyre.Placement)
+                {
+                    case "FL":
+                        fl.Add(tyre);
+                        break;
+                    case "FR":
+                        fr.Add(tyre);
+                        break;
+                    case "RL":
+                        rl.Add(tyre);
+                        break;
+                    case "RR":
+                        rr.Add(tyre);
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            sortedTyres.TyresFL = fl;
+            sortedTyres.TyresFR = fr;
+            sortedTyres.TyresRL = rl;
+            sortedTyres.TyresRR = rr;
+            AvailableTyres = sortedTyres;
+            return;
+        }
+
+        public void GetDegradationData()
+        {
+            CoefHandler = new TrackDegrCoefHandler();
+            TrackCoefPoints = CoefHandler.DeserializeTxt("Resources/TrackDegradationCoefficients.txt");
+        }
 
     }
 }

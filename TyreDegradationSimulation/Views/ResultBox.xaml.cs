@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TyreDegradationSimulation.ViewModels;
 
 namespace TyreDegradationSimulation.Views
 {
@@ -20,11 +21,10 @@ namespace TyreDegradationSimulation.Views
     /// </summary>
     public partial class ResultBox : Grid
     {
-        // string tyrePosition, string average, string mode, string range
         public ResultBox(string tyrePosition)
         {
             InitializeComponent();
-            tbResultName.Text = tyrePosition;
+            tbTyrePosition.Text = tyrePosition;
         }
     }
 }

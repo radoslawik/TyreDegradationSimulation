@@ -9,23 +9,23 @@
 
     <Border BorderBrush="Black" BorderThickness="1" Width="210" Height="125" Background="Goldenrod" Margin="10">
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10">
-            <TextBlock Name="tbResultName" HorizontalAlignment="Center" Margin="5"/>
+            <TextBlock Name="tbTyrePosition" HorizontalAlignment="Center" Margin="5"/>
             <StackPanel Orientation="Horizontal" >
                 <TextBlock Width="80" Text="Average" Padding="5" HorizontalAlignment="Left" />
-                <Border Width="50" BorderThickness="1" BorderBrush="Black" Margin="5" Background="White">
-                    <TextBlock Name="tbAverage" Text="" HorizontalAlignment="Center" />
+                <Border Width="50" BorderThickness="1" BorderBrush="Black" Margin="5" Background="{Binding Path=ResultBackground.AverageColor}">
+                    <TextBlock Text="{Binding Path=Results.Average}" FontWeight="Bold" HorizontalAlignment="Center" />
                 </Border>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Width="80" Text="Mode" Padding="5" HorizontalAlignment="Left" />
-                <Border Width="50" BorderThickness="1" BorderBrush="Black" Margin="5" Background="White">
-                    <TextBlock Name="tbMode" Text="" HorizontalAlignment="Center" />
+                <Border Width="50" BorderThickness="1" BorderBrush="Black" Margin="5" Background="{Binding Path=ResultBackground.ModeColor}">
+                    <TextBlock Text="{Binding Path=Results.Mode}" FontWeight="Bold" HorizontalAlignment="Center" />
                 </Border>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Width="80" Text="Range" Padding="5" HorizontalAlignment="Left" />
-                <Border Width="50" BorderThickness="1" BorderBrush="Black"  Margin="5" Background="White">
-                    <TextBlock Name="tbRange" Text="" HorizontalAlignment="Center"/>
+                <Border Width="50" BorderThickness="1" BorderBrush="Black"  Margin="5" Background="{Binding Path=ResultBackground.RangeColor}">
+                    <TextBlock Text="{Binding Path=Results.Range}" FontWeight="Bold" HorizontalAlignment="Center"/>
                 </Border>
             </StackPanel>
         </StackPanel>
