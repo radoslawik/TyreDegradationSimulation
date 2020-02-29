@@ -63,6 +63,9 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -83,10 +86,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Handlers\TrackDegrCofHandler.cs" />
+    <Compile Include="Handlers\TemperatureHandler.cs" />
+    <Compile Include="Handlers\TrackDegrCoefHandler.cs" />
     <Compile Include="Handlers\XmlHandler.cs" />
-    <Compile Include="Models\TrackDegrCof.cs" />
+    <Compile Include="Models\Result.cs" />
+    <Compile Include="Models\Temperature.cs" />
+    <Compile Include="Models\TrackDegrCoef.cs" />
     <Compile Include="Models\Tyre.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\ResultViewModel.cs" />
     <Compile Include="Views\ResultBox.xaml.cs">
       <DependentUpon>ResultBox.xaml</DependentUpon>
     </Compile>
@@ -125,6 +134,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -146,9 +156,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\TrackDegradationCoefficients.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

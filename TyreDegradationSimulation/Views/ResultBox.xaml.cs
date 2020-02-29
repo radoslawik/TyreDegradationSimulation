@@ -20,9 +20,11 @@ namespace TyreDegradationSimulation.Views
     /// </summary>
     public partial class ResultBox : Grid
     {
-        public ResultBox()
+        // string tyrePosition, string average, string mode, string range
+        public ResultBox(string tyrePosition)
         {
             InitializeComponent();
+            tbResultName.Text = tyrePosition;
         }
     }
 }

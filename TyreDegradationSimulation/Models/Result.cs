@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace TyreDegradationSimulation.Models
 {
-    public class TrackDegrCof
+    public class Result
     {
-        public string TrackName { get; set; }
-        public string TrackLocation { get; set; }
-        public List<string> Values { get; set; }
+        public int Average { get; set; }
+        public int Mode { get; set; }
+        public int Range { get; set; }
     }
 }

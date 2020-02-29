@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using TyreDegradationSimulation.Views;
 using TyreDegradationSimulation.Models;
 using TyreDegradationSimulation.Handlers;
+using TyreDegradationSimulation.ViewModels;
 
 
 namespace TyreDegradationSimulation
@@ -24,51 +25,32 @@ namespace TyreDegradationSimulation
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<ResultBox> resultWindows;
+        private MainViewModel mvm;
+
         public MainWindow()
         {
+            mvm = new MainViewModel();
             InitializeComponent();
+
+            this.DataContext = mvm;
+            AddSelection();
             PopulateResultWindows();
-
-            XmlHandler xmlHandler = new XmlHandler();
-            List<Tyre> tyres = xmlHandler.DeserializeXml("Resources/TyresXML.xml");
-            Console.WriteLine(tyres[0].Name);
-
-            TrackDegrCofHandler cofHandler = new TrackDegrCofHandler();
-            List<TrackDegrCof> coefs = cofHandler.DeserializeTxt("Resources/TrackDegradationCoefficients.txt");
-            Console.WriteLine(coefs[0].TrackLocation);
-            Console.WriteLine(coefs[0].TrackName);
-
-            foreach (Tyre tyre in tyres)
-            {
-                switch (tyre.Placement)
-                {
-                    case "FL":
-                        cbTyresFL.Items.Add(tyre.Name);
-                        break;
-                    case "FR":
-                        cbTyresFR.Items.Add(tyre.Name);
-                        break;
-                    case "RL":
-                        cbTyresRL.Items.Add(tyre.Name);
-                        break;
-                    case "RR":
-                        cbTyresRR.Items.Add(tyre.Name);
-                        break;
-                    default:
-                        break;
-                }
-                
-            }
-
+ 
+        }
+        private async void ComboBox_TrackChange(object sender, SelectionChangedEventArgs e)
+        {
+            Console.WriteLine(mvm.TrackLocation);
+            string cityname = mvm.TrackLocation;
+            Temperature temp = await mvm.TempHandler.GetTemperatureInfo(cityname);
+            mvm.Temperature = temp.Main.Temp.ToString();
         }
 
         public void PopulateResultWindows()
         {
-            ResultBox frLt = new ResultBox();
-            ResultBox frRt = new ResultBox();
-            ResultBox rrLt = new ResultBox();
-            ResultBox rrRt = new ResultBox();
+            ResultBox frLt = new ResultBox("Front Left");
+            ResultBox frRt = new ResultBox("Front Right");
+            ResultBox rrLt = new ResultBox("Rear Left");
+            ResultBox rrRt = new ResultBox("Rear Right");
 
             resultGrid.Children.Add(frLt);
             Grid.SetRow(frLt, 0);
@@ -88,16 +70,36 @@ namespace TyreDegradationSimulation
             
         }
 
-        public void PopulateResultWindows2()
+        public void AddSelection()
         {
-            resultWindows = new List<ResultBox>
+            foreach (Tyre tyre in mvm.AvailableTyres)
             {
-                new ResultBox{ },
-                new ResultBox{ },
-                new ResultBox{ },
-                new ResultBox{ },
-             };
+                switch (tyre.Placement)
+                {
+                    case "FL":
+                        cbTyresFL.Items.Add(tyre.Name);
+                        break;
+                    case "FR":
+                        cbTyresFR.Items.Add(tyre.Name);
+                        break;
+                    case "RL":
+                        cbTyresRL.Items.Add(tyre.Name);
+                        break;
+                    case "RR":
+                        cbTyresRR.Items.Add(tyre.Name);
+                        break;
+                    default:
+                        break;
+                }
 
+            }
+
+            foreach (TrackDegrCoef coef in mvm.CoefPoints)
+            {
+                cbTracks.Items.Add(coef.TrackLocation);
+            }
         }
+
+
     }
 }

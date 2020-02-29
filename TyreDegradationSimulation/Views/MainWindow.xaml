@@ -5,61 +5,71 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TyreDegradationSimulation"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="450">
+        Title="MainWindow" Height="620" Width="600"
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize">
     <Grid>
         <StackPanel Orientation="Vertical">
-            <TextBlock Text="Tyre degradation simulation"/>
-            <Grid Name="selectionSection">
-                <TextBlock Text="Selections"/>
-                <Grid Name="selectionGrid">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+            <TextBlock FontSize="20" Text="Tyre Degradation Simulation" HorizontalAlignment="Center"/>
+            <Border Name="selectionSection" Margin="10" BorderThickness="1" BorderBrush="Black" >
+                <StackPanel Orientation="Vertical">
+                    <TextBlock FontSize="16" Text="Selections" HorizontalAlignment="Center"/>
+                    <Grid Name="selectionGrid" Margin="10 10 35 10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.9*"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="0.9*"/>
+                            <ColumnDefinition Width="1.5*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Front Left" Grid.Row="0" Grid.Column="0" Margin="20" HorizontalAlignment="Right" />
-                    <ComboBox Name="cbTyresFL" Grid.Row="0" Grid.Column="1" >
-                    </ComboBox>
-                    <TextBlock Text="Front Right" Grid.Row="0" Grid.Column="2" Margin="20" HorizontalAlignment="Right"/>
-                    <ComboBox Name="cbTyresFR" Grid.Row="0" Grid.Column="3" >
-                    </ComboBox>
-                    <TextBlock Text="Rear Left" Grid.Row="1" Grid.Column="0" Margin="20" HorizontalAlignment="Right" />
-                    <ComboBox Name="cbTyresRL" Grid.Row="1" Grid.Column="1" >
-                    </ComboBox>
-                    <TextBlock Text="Rear Right" Grid.Row="1" Grid.Column="2" Margin="20" HorizontalAlignment="Right"/>
-                    <ComboBox Name="cbTyresRR" Grid.Row="1" Grid.Column="3" >
-                    </ComboBox>
-                </Grid>
-            </Grid>
-            <Grid Name="resultSection">
-                <TextBlock Text="Results"/>
-                <Grid Name="resultGrid">
-                    <Grid.Resources>
-                        <Style TargetType="{x:Type Grid}">
-                            <Setter Property="Margin" Value="100"/>
-                        </Style>
-                    </Grid.Resources>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                </Grid>
-            </Grid>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="legends here"/>
+                        <TextBlock Text="Front Left" Grid.Row="0" Grid.Column="0" Margin="10" HorizontalAlignment="Right" />
+                        <ComboBox Name="cbTyresFL" Grid.Row="0" Grid.Column="1" Margin="5"/>
+                        <TextBlock Text="Front Right" Grid.Row="0" Grid.Column="2" Margin="10" HorizontalAlignment="Right"/>
+                        <ComboBox Name="cbTyresFR" Grid.Row="0" Grid.Column="3" Margin="5"/>
+                        <TextBlock Text="Rear Left" Grid.Row="1" Grid.Column="0" Margin="10" HorizontalAlignment="Right" />
+                        <ComboBox Name="cbTyresRL" Grid.Row="1" Grid.Column="1" Margin="5"/>
+                        <TextBlock Text="Rear Right" Grid.Row="1" Grid.Column="2" Margin="10" HorizontalAlignment="Right"/>
+                        <ComboBox Name="cbTyresRR" Grid.Row="1" Grid.Column="3" Margin="5"/>
+                        <TextBlock Text="Track" Grid.Row="2" Grid.Column="0" Margin="10" HorizontalAlignment="Right" />
+                        <ComboBox Name="cbTracks" SelectionChanged="ComboBox_TrackChange" SelectedValue="{Binding Path=TrackLocation}" Grid.Row="2" Grid.Column="1" Margin="5"/>
+                        <TextBlock Text="Temperature" Grid.Row="2" Grid.Column="2" Margin="10" HorizontalAlignment="Right"/>
+                        <Border BorderThickness="1" BorderBrush="Black" Grid.Row="2" Grid.Column="3" Margin="5">
+                            <TextBlock Text="{Binding Path=Temperature}" FontWeight="Bold" Name="tbTemperature" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            <Border Name="resultSection" Margin="10" BorderThickness="1" BorderBrush="Black" >
+                <StackPanel Orientation="Vertical">
+                    <TextBlock FontSize="16" Text="Results" HorizontalAlignment="Center"/>
+                    <Grid Name="resultGrid" Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Border Width="80" BorderThickness="1" BorderBrush="Black" Margin="5" Background="PaleGreen">
+                    <TextBlock Text="na-999" HorizontalAlignment="Center" />
+                </Border>
+                <Border Width="80" BorderThickness="1" BorderBrush="Black" Margin="5" Background="Yellow">
+                    <TextBlock Text="1000-2999" HorizontalAlignment="Center" />
+                </Border>
+                <Border Width="80" BorderThickness="1" BorderBrush="Black" Margin="5" Background="Red">
+                    <TextBlock Text="3000-na" HorizontalAlignment="Center" />
+                </Border>
             </StackPanel>
         </StackPanel>
-        
     </Grid>
 </Window>

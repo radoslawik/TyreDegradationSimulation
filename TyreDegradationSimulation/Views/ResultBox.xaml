@@ -5,8 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TyreDegradationSimulation.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="175">
-    <Border BorderBrush="Azure" BorderThickness="20" Width="150" Height="175" Background="Black">
-    
+             d:DesignHeight="125" d:DesignWidth="210">
+
+    <Border BorderBrush="Black" BorderThickness="1" Width="210" Height="125" Background="Goldenrod" Margin="10">
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10">
+            <TextBlock Name="tbResultName" HorizontalAlignment="Center" Margin="5"/>
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Width="80" Text="Average" Padding="5" HorizontalAlignment="Left" />
+                <Border Width="50" BorderThickness="1" BorderBrush="Black" Margin="5" Background="White">
+                    <TextBlock Name="tbAverage" Text="" HorizontalAlignment="Center" />
+                </Border>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="80" Text="Mode" Padding="5" HorizontalAlignment="Left" />
+                <Border Width="50" BorderThickness="1" BorderBrush="Black" Margin="5" Background="White">
+                    <TextBlock Name="tbMode" Text="" HorizontalAlignment="Center" />
+                </Border>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="80" Text="Range" Padding="5" HorizontalAlignment="Left" />
+                <Border Width="50" BorderThickness="1" BorderBrush="Black"  Margin="5" Background="White">
+                    <TextBlock Name="tbRange" Text="" HorizontalAlignment="Center"/>
+                </Border>
+            </StackPanel>
+        </StackPanel>
     </Border>
 </Grid>
