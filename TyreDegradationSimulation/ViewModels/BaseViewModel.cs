@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TyreDegradationSimulation.Models;
+using TyreDegradationSimulation.Handlers;
 
 namespace TyreDegradationSimulation.ViewModels
 {
@@ -45,9 +46,19 @@ namespace TyreDegradationSimulation.ViewModels
         public int SelectedTrackIndex
         {
             get { return selectedTrackIndex; }
-            set { selectedTrackIndex = value; NotifyPropertyChanged("SelectedTrackIndex"); }
-        }
+            set
+            {
 
+                selectedTrackIndex = value;
+                if(value != -1)
+                {
+                    NotifyPropertyChanged("Temperature");
+                }
+                
+                NotifyPropertyChanged("SelectedTrackIndex");
+            }
+        }
+    
 
         private Tyre selectedFL;
         public Tyre SelectedFL

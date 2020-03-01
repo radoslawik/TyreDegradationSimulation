@@ -41,14 +41,12 @@ namespace TyreDegradationSimulation
             this.DataContext = mvm;
             PopulateResultWindows();
             ClearResults();
+            mvm.SelectedTrackIndex = -1;
  
         }
         private async void ComboBox_TrackChange(object sender, SelectionChangedEventArgs e)
         {
-            TrackDegrCoef selectedItem = (sender as ComboBox).SelectedItem as TrackDegrCoef;
-            Temperature temp = await mvm.TempHandler.GetTemperatureInfo(selectedItem.TrackLocation);
-            int tempVal = (int)Math.Ceiling(temp.Main.Temp);
-            mvm.Temperature = (temp != null) ? tempVal.ToString() : "";
+            mvm.Temperature = await mvm.GetCurrentTemperature();
             if (CheckSelection())
                 UpdateResults();
             return;

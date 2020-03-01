@@ -13,9 +13,13 @@ namespace TyreDegradationSimulation.ViewModels
         public XmlHandler XmlHandler;
         public TrackDegrCoefHandler CoefHandler;
         public TemperatureHandler TempHandler;
-     
+
         public MainViewModel() : base()
         {
+            TempHandler = new TemperatureHandler();
+            XmlHandler = new XmlHandler();
+            CoefHandler = new TrackDegrCoefHandler();
+
             GetAndSortTyres();
             GetDegradationData();
 
@@ -23,12 +27,12 @@ namespace TyreDegradationSimulation.ViewModels
             Console.WriteLine(TrackCoefPoints[0].TrackLocation);
             Console.WriteLine(TrackCoefPoints[0].TrackName);
 
-            TempHandler = new TemperatureHandler();
+            
         }
 
         public void GetAndSortTyres()
         {
-            XmlHandler = new XmlHandler();
+            
             List<Tyre> allTyres = XmlHandler.DeserializeXml("Resources/TyresXML.xml");
             Console.WriteLine(allTyres[0].Name);
 
@@ -68,9 +72,21 @@ namespace TyreDegradationSimulation.ViewModels
         }
 
         public void GetDegradationData()
-        {
-            CoefHandler = new TrackDegrCoefHandler();
+        {      
             TrackCoefPoints = CoefHandler.DeserializeTxt("Resources/TrackDegradationCoefficients.txt");
+        }
+
+        public async Task<string> GetCurrentTemperature()
+        {
+            
+            string tempRet = "";
+            Temperature tempData = await TempHandler.GetTemperatureInfo(TrackCoefPoints[SelectedTrackIndex].TrackLocation);
+            if (tempData != null)
+            {
+                int tempVal = (int)Math.Ceiling(tempData.Main.Temp);
+                tempRet = tempVal.ToString();
+            }
+            return tempRet;
         }
 
     }
