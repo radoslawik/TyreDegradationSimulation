@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TyreDegradationSimulation.Models
 {
@@ -17,6 +13,13 @@ namespace TyreDegradationSimulation.Models
 
     public class AvailableTyresList
     {
+        public AvailableTyresList(List<Tyre> tFL, List<Tyre> tFR, List<Tyre> tRL, List<Tyre> tRR)
+        {
+            TyresFL = tFL;
+            TyresFR = tFR;
+            TyresRL = tRL;
+            TyresRR = tRR;
+        }
         public List<Tyre> TyresFL { get; set; }
         public List<Tyre> TyresFR { get; set; }
         public List<Tyre> TyresRL { get; set; }

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using TyreDegradationSimulation.Models;
-using TyreDegradationSimulation.Handlers;
 
 namespace TyreDegradationSimulation.ViewModels
 {
@@ -25,7 +22,23 @@ namespace TyreDegradationSimulation.ViewModels
         public string Temperature
         {
             get { return temperature; }
-            set { temperature = value; NotifyPropertyChanged("Temperature"); }
+            set
+            {
+                try
+                {   
+                    if(value != "")
+                    {
+                        int temperatureVal = Int32.Parse(value);
+                    }     
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Temperature error");
+                    return;
+                }
+                temperature = value;
+                NotifyPropertyChanged("Temperature");
+            }
         }
 
         private AvailableTyresList availableTyres;
@@ -42,19 +55,16 @@ namespace TyreDegradationSimulation.ViewModels
             set { trackCoefPoints = value; NotifyPropertyChanged("TrackCoefPoints"); }
         }
 
-        private int selectedTrackIndex;
+        private int selectedTrackIndex = -1;
         public int SelectedTrackIndex
         {
             get { return selectedTrackIndex; }
             set
             {
-
                 selectedTrackIndex = value;
                 if(value != -1)
-                {
                     NotifyPropertyChanged("Temperature");
-                }
-                
+        
                 NotifyPropertyChanged("SelectedTrackIndex");
             }
         }

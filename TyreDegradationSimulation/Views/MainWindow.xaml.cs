@@ -1,22 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TyreDegradationSimulation.Views;
-using TyreDegradationSimulation.Models;
-using TyreDegradationSimulation.Handlers;
 using TyreDegradationSimulation.ViewModels;
-
+using System;
 
 namespace TyreDegradationSimulation
 {
@@ -41,13 +27,12 @@ namespace TyreDegradationSimulation
             this.DataContext = mvm;
             PopulateResultWindows();
             ClearResults();
-            mvm.SelectedTrackIndex = -1;
  
         }
         private async void ComboBox_TrackChange(object sender, SelectionChangedEventArgs e)
         {
             mvm.Temperature = await mvm.GetCurrentTemperature();
-            if (CheckSelection())
+            if (mvm.CheckSelection())
                 UpdateResults();
             return;
 
@@ -55,27 +40,26 @@ namespace TyreDegradationSimulation
 
         private void ComboBox_CheckTyresSetup(object sender, SelectionChangedEventArgs e)
         {
-            if (!CheckRules())
+            if (mvm.CheckRules())
             {
-                (sender as ComboBox).SelectedItem = null;
-                ClearResults();
+                if (mvm.CheckSelection())
+                {
+                    UpdateResults();
+                }         
             }
             else
             {
-                if (CheckSelection())
-                {
-                    Console.WriteLine("show results");
-                    UpdateResults();
-                }
-                       
-            }
-                
+                (sender as ComboBox).SelectedItem = null;
+                ClearResults();
+            }           
             return;
         }
         private void ComboBox_ManualTemp(object sender, RoutedEventArgs e)
         {
-            if (CheckSelection())
+            if (mvm.CheckSelection())
                 UpdateResults();
+            else
+                ClearResults();
             return;
         }
         public void PopulateResultWindows()
@@ -101,127 +85,18 @@ namespace TyreDegradationSimulation
             Grid.SetRow(rrRt, 1);
             Grid.SetColumn(rrRt, 1);               
         }
-
-        public Result CalculateTyreDegradation(Tyre tyreData)
-        {
-            Result retval = new Result();
-            TrackDegrCoef trackData = mvm.TrackCoefPoints[mvm.SelectedTrackIndex];
-            List<int> trackPoints = trackData.Values;
-            if (trackPoints.Count < 0)
-            {
-                Console.WriteLine("wooops track points = 0");
-                return null;
-            }
-                
-            double average = trackPoints.Average();
-            double range_min = trackPoints.Min();
-            double range_max = trackPoints.Max();
-            double mode =
-                trackPoints
-                    .GroupBy(x => x)
-                    .OrderByDescending(x => x.Count()).ThenBy(x => x.Key)
-                    .Select(x => x.Key)
-                    .FirstOrDefault();
-
-            double degPercentage;
-            switch (tyreData.Type)
-            {
-                case "SuperSoft":
-                    degPercentage = 0.8;
-                    break;
-                case "Soft":
-                    degPercentage = 0.8;
-                    break;
-                case "Medium":
-                    degPercentage = 0.9;
-                    break;
-                case "Hard":
-                    degPercentage = 0.75;
-                    break;
-                default:
-                    degPercentage = 1;
-                    break;
-
-            }
-            double tyreCoef = degPercentage * tyreData.DegradationCoefficient;
-
-            int trackTemperature;
-            try
-            {
-                trackTemperature = Int32.Parse(mvm.Temperature);
-            }
-            catch (FormatException e)
-            {
-                MessageBox.Show(e.Message, "Temperature error");
-                return null;
-            }
-            retval.Average = (int)Math.Ceiling((average * trackTemperature) / tyreCoef);
-            retval.Mode = (int)Math.Ceiling((mode * trackTemperature) / tyreCoef);
-            retval.Range = (int)Math.Ceiling((range_max * trackTemperature) / tyreCoef) - (int)Math.Ceiling((range_min * trackTemperature) / tyreCoef);
-
-            return retval;
-        }
-
-        public bool CheckRules()
-        {
-            bool correct = true;
-
-            if (mvm.SelectedFL != null && mvm.SelectedFR != null && mvm.SelectedRL != null && mvm.SelectedRR != null) //all tyres selected
-            {
-                if ((mvm.SelectedFL.Type != mvm.SelectedFR.Type) || (mvm.SelectedFR.Type != mvm.SelectedRL.Type) || (mvm.SelectedRL.Type != mvm.SelectedRR.Type))
-                {
-                    Console.WriteLine("wrong types");
-                    correct = false;
-                }
-            }
-            if (mvm.SelectedFL != null && mvm.SelectedFR != null) //checking front tyres
-            {
-                if (mvm.SelectedFL.Family != mvm.SelectedFR.Family)
-                {
-                    Console.WriteLine("wrong family on front");
-                    correct = false;
-                }
-
-            }
-            if (mvm.SelectedRL != null && mvm.SelectedRR != null) //checking rear tyres
-            {
-                if (mvm.SelectedRL.Family != mvm.SelectedRR.Family)
-                {
-                    Console.WriteLine("wrong family on rear");
-                    correct = false;
-                }
-            }
-            return correct;
-
-        }
-
-        public bool CheckSelection()
-        {
-            bool correct = false;
-            if (mvm.SelectedFL != null && mvm.SelectedFR != null
-                && mvm.SelectedRL != null && mvm.SelectedRR != null
-                && mvm.Temperature != "" && mvm.SelectedTrackIndex != -1)
-            {
-                Console.WriteLine("everything selected");
-                correct = true;
-            }
-            else
-            {
-                ClearResults();
-            }
-            Console.WriteLine("NOT everything selected");
-            return correct;
-        }
+    
 
         public void UpdateResults()
         {
-            rvmFL.Results = CalculateTyreDegradation(mvm.SelectedFL);
-            frLt.DataContext = rvmFL;
-            rvmFR.Results = CalculateTyreDegradation(mvm.SelectedFR);
-            frRt.DataContext = rvmFR;
-            rvmRL.Results = CalculateTyreDegradation(mvm.SelectedRL);
-            rrLt.DataContext = rvmRL;
-            rvmRR.Results = CalculateTyreDegradation(mvm.SelectedRR);
+            rvmFL.Results = mvm.CalculateTyreDegradation(mvm.SelectedFL);
+            rvmFR.Results = mvm.CalculateTyreDegradation(mvm.SelectedFR);
+            rvmRL.Results = mvm.CalculateTyreDegradation(mvm.SelectedRL);
+            rvmRR.Results = mvm.CalculateTyreDegradation(mvm.SelectedRR);
+
+            frLt.DataContext = rvmFL;     
+            frRt.DataContext = rvmFR;       
+            rrLt.DataContext = rvmRL;  
             rrRt.DataContext = rvmRR;
         }
 
