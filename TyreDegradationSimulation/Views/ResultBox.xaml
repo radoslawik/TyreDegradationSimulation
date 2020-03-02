@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TyreDegradationSimulation.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="125" d:DesignWidth="210">
+             d:DesignHeight="150" d:DesignWidth="250">
 
     <Border BorderBrush="Black" BorderThickness="1" Width="210" Height="125" Background="Goldenrod" Margin="10">
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10">

@@ -29,6 +29,7 @@ namespace TyreDegradationSimulation
             ClearResults();
  
         }
+
         private async void ComboBox_TrackChange(object sender, SelectionChangedEventArgs e)
         {
             mvm.Temperature = await mvm.GetCurrentTemperature();
