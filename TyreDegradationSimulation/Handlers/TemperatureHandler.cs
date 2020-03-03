@@ -13,7 +13,6 @@ namespace TyreDegradationSimulation.Handlers
         public async Task<Temperature> GetTemperatureInfo(string cityname)
         {
             string path = "http://api.openweathermap.org/data/2.5/weather?q=" + cityname + "&units=metric&appid=449ee6bcdb1d7a41022ad8216f07546e";
-            Console.WriteLine(path);
             string responseBody = "";
             try
             {

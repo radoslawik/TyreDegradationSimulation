@@ -18,12 +18,11 @@ namespace TyreDegradationSimulation.Handlers
                 char[] delimiter = {'|'};
                 int count = 3;
                 string[] coefFields = coefs[i].Split(delimiter, count);
-                string[] coefValues = null;
                 coef.TrackName = coefFields[0];
                 coef.TrackLocation = coefFields[1];
 
                 char[] valDelimiter = { ',' };
-                coefValues = coefFields[2].Split(valDelimiter);
+                string[] coefValues = coefFields[2].Split(valDelimiter);
                 int[] coefIntVals = Array.ConvertAll(coefValues, int.Parse);
                 coef.Values = coefIntVals.ToList();
 
