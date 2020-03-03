@@ -22,12 +22,11 @@ namespace TyreDegradationSimulation
             rvmFR = new ResultViewModel();
             rvmRL = new ResultViewModel();
             rvmRR = new ResultViewModel();
-            InitializeComponent();
 
+            InitializeComponent();
             this.DataContext = mvm;
             PopulateResultWindows();
             ClearResults();
- 
         }
 
         private async void ComboBox_TrackChange(object sender, SelectionChangedEventArgs e)
@@ -36,7 +35,6 @@ namespace TyreDegradationSimulation
             if (mvm.CheckSelection())
                 UpdateResults();
             return;
-
         }
 
         private void ComboBox_CheckTyresSetup(object sender, SelectionChangedEventArgs e)
@@ -87,7 +85,6 @@ namespace TyreDegradationSimulation
             Grid.SetColumn(rrRt, 1);               
         }
     
-
         public void UpdateResults()
         {
             rvmFL.Results = mvm.CalculateTyreDegradation(mvm.SelectedFL);
@@ -111,10 +108,6 @@ namespace TyreDegradationSimulation
             rrLt.DataContext = rvmRL;
             rvmRR.Results = null;
             rrRt.DataContext = rvmRR;
-
         }
-
-
-
     }
 }

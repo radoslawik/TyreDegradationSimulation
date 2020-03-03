@@ -10,9 +10,9 @@ namespace TyreDegradationSimulation.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        public XmlHandler XmlHandler;
-        public TrackDegrCoefHandler CoefHandler;
-        public TemperatureHandler TempHandler;
+        private XmlHandler XmlHandler;
+        private TrackDegrCoefHandler CoefHandler;
+        private TemperatureHandler TempHandler;
 
         public MainViewModel() : base()
         {
