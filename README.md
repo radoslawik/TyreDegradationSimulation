@@ -1,6 +1,6 @@
 # Tyre Degradation Simulation
 
-### C# WPF application with to calculate tyre degradation based on gathered circuit data
+### C# WPF application to calculate tyre degradation based on gathered circuit data
 
 ### Requirements
 - Visual Studio 2019 with C# .NET tools
